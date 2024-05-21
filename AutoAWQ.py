@@ -33,7 +33,7 @@ def main():
         model_name = os.path.basename(model_path)
     else:
         # assume HF
-        match = re.search(r'^([a-zA-Z0-9]+)/([a-zA-Z0-9]+)$', model_path)
+        match = re.search(r'^([a-zA-Z0-9\-]+)/([a-zA-Z0-9\-]+)$', model_path)
         if not match:
             print("HF model path must be in the format '<organization>/<repo-name>'")
             sys.exit(2)
@@ -45,6 +45,8 @@ def main():
     if output_dir:
         output_path = os.path.join(output_dir, output_path)
     # Ready call AutoAWQ
+    print(f"The model '{model_path}' will be quantized with AWQ in '{output_path}'")
+    print()
     AutoAWQ(model_path, output_path)
 
 if __name__ == "__main__":
