@@ -40,12 +40,12 @@ def main():
         # extract model name
         model_name = match.group(2)
     # Compute output path
+    output_path = f"{model_name}-awq"
     output_dir = os.getenv('AUTOAWQ_OUTPUTDIR')
     if output_dir:
-        output_path = f"{output_dir}/{model_name}-awq"
-    else:
-        output_path = f"{model_name}-awq"
-    print(output_path)
+        output_path = os.path.join(output_dir, output_path)
+    # Ready call AutoAWQ
+    AutoAWQ(model_path, output_path)
 
 if __name__ == "__main__":
     main()
