@@ -3,6 +3,7 @@
 import os
 import re
 import sys
+import time
 
 from awq import AutoAWQForCausalLM
 from transformers import AutoTokenizer
@@ -45,13 +46,20 @@ def main():
     if output_dir:
         # Check if directory exists
         if not os.path.isdir(output_dir):
-            print("AUTOAWQ_OUTPUTDIR is not a valid directory")
-            sys.exit(2)
+            print(f"AUTOAWQ_OUTPUTDIR is set to '{output_dir}' but directory does not exist.")
+            sys.exit(3)
+        # Append model name to path
         output_path = os.path.join(output_dir, output_path)
-    # Ready call AutoAWQ
+    # Print params handling results
     print(f"The model '{model_path}' will be quantized with AWQ in '{output_path}'")
     print()
+    # Call the function
+    start_time = time.time()
     AutoAWQ(model_path, output_path)
+    end_time = time.time()
+    elapsed_seconds = end_time - start_time
+    print()
+    print(f"The AWQ quantization took {int(elapsed_seconds // 60)} minute(s) and {int(elapsed_seconds % 60)} second(s)")
 
 if __name__ == "__main__":
     main()
