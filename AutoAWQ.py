@@ -43,6 +43,10 @@ def main():
     output_path = f"{model_name}-awq"
     output_dir = os.getenv('AUTOAWQ_OUTPUTDIR')
     if output_dir:
+        # Check if directory exists
+        if not os.path.isdir(output_dir):
+            print("AUTOAWQ_OUTPUTDIR is not a valid directory")
+            sys.exit(2)
         output_path = os.path.join(output_dir, output_path)
     # Ready call AutoAWQ
     print(f"The model '{model_path}' will be quantized with AWQ in '{output_path}'")
