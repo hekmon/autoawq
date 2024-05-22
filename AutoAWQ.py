@@ -22,7 +22,7 @@ def AutoAWQ(model_path, quant_path):
 def main():
     # Handle model name
     if len(sys.argv) - 1 != 1 or not sys.argv[1]:
-        print("first argument must be a model path (HF or disk)")
+        print("one argument needed: must be a model path (HF or disk)")
         sys.exit(1)
     model_path = sys.argv[1]
     if os.path.isabs(model_path):
