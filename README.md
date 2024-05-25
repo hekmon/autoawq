@@ -4,7 +4,7 @@ This is a simple wrapper around the original [AutoAWQ](https://github.com/casper
 
 ## Usage
 
-It takes a single argument: the model. The argument can be a Hugging Face ID (relative path) or a local directory (full path). Model name will be extracted from that path and suffixed with `-awq` for the output folder. Output will target by default the working directory by default, but you can specify an output folder as well using the `AUTOAWQ_OUTPUTDIR` environment variable.
+It takes a single argument: the model. The argument can be a Hugging Face ID (relative path) or a local directory (full path). Model name will be extracted from that path and suffixed with `-awq` for the output folder. Output will target the working directory by default, but you can specify an output folder as well using the `AUTOAWQ_OUTPUTDIR` environment variable.
 
 Note that, like the original code, AutoAWS must be installed:
 
