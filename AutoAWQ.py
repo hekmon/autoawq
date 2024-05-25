@@ -8,10 +8,10 @@ import time
 from awq import AutoAWQForCausalLM
 from transformers import AutoTokenizer
 
-## From https://docs.vllm.ai/en/latest/quantization/auto_awq.html
+## From https://github.com/casper-hansen/AutoAWQ/blob/v0.2.5/examples/quantize.py
 def AutoAWQ(model_path, quant_path):
     # Load model
-    model = AutoAWQForCausalLM.from_pretrained(model_path, **{"low_cpu_mem_usage": True})
+    model = AutoAWQForCausalLM.from_pretrained(model_path, **{"low_cpu_mem_usage": True, "use_cache": False})
     tokenizer = AutoTokenizer.from_pretrained(model_path, trust_remote_code=True)
     # Quantize
     model.quantize(tokenizer, quant_config={ "zero_point": True, "q_group_size": 128, "w_bit": 4, "version": "GEMM" })
@@ -51,13 +51,12 @@ def main():
         # Append model name to path
         output_path = os.path.join(output_dir, output_path)
     # Print params handling results
-    print(f"The model '{model_path}' will be quantized with AWQ in '{output_path}'")
+    print(f"'{model_path}' will be quantized to AWQ in '{output_path}'")
     print()
     # Call the function
     start_time = time.time()
     AutoAWQ(model_path, output_path)
-    end_time = time.time()
-    elapsed_seconds = end_time - start_time
+    elapsed_seconds = time.time() - start_time
     print()
     print(f"The AWQ quantization took {int(elapsed_seconds // 60)} minute(s) and {int(elapsed_seconds % 60)} second(s)")
 
